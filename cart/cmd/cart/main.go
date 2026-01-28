@@ -5,7 +5,8 @@ import (
     "encoding/json"
     "log"
     "net/http"
-
+	
+	"github.com/Vietta7/HWgo/cart/internal/client"
     "github.com/Vietta7/HWgo/cart/internal/handler"
     "github.com/Vietta7/HWgo/cart/internal/repository"
     "github.com/Vietta7/HWgo/cart/internal/usecase"
@@ -13,8 +14,8 @@ import (
 
 func main() {
 	repo := repository.NewMemoryRepo()
-	var lomsClient usecase.LomsClient    
-	var productClient usecase.ProductClient 
+	lomsClient := client.NewLomsClient("http://localhost:8082")
+	productClient := client.NewProductClient()
 
 	uc := usecase.New(lomsClient, productClient, repo)
 	h := handler.New(uc)
